@@ -1,10 +1,13 @@
 /**
  * Generates a cryptographically secure random identifier.
  * NOT intended for authentication, authorization, or secrets.
+ *
+ * @returns {string} A UUID v4 string if supported, otherwise a 32-char hex string.
+ * @throws {Error} If a secure random generator is unavailable.
  */
 export const generateUniqueId = () => {
   const crypto = globalThis.crypto
-  if (typeof crypto === 'undefined') {
+  if (!crypto) {
     throw new Error('Secure random generator unavailable')
   }
   if (crypto.randomUUID) {

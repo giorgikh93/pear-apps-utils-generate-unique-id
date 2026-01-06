@@ -1,8 +1,16 @@
 import * as Crypto from 'expo-crypto'
 
+/**
+ * Generates a cryptographically secure random identifier for React Native.
+ * NOT intended for authentication, authorization, or secrets.
+ * Output format is stable and deterministic.
+ *
+ * @returns {string} A UUID v4 string when supported, otherwise a 32-char hex string.
+ * @throws {Error} When a secure random generator is unavailable.
+ */
 export const generateUniqueId = () => {
-  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID()
   if (Crypto.randomUUID) return Crypto.randomUUID()
+  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID()
 
   const getRandomValues =
     globalThis.crypto?.getRandomValues || Crypto.getRandomValues
